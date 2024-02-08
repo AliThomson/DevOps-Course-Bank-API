@@ -32,5 +32,22 @@ def test_get_account_raises_error_if_no_account_matches(bank: Bank):
     with pytest.raises(ValueError):
         bank.get_account('Name 2')
 
-# TODO: Add unit tests for bank.add_funds()
+def test_add_funds_adds_to_correct_account(bank: Bank):
+    bank.create_account('Name 3')
+    bank.add_funds('Name 3', 50)
 
+    testTransaction = bank.transactions[0]
+
+    assert len(bank.transactions) == 1
+    assert testTransaction.amount == 50
+
+def test_add_funds_errors_when_account_does_not_exist(bank: Bank):
+
+    with pytest.raises(ValueError):
+       bank.add_funds('Name 4', 50)
+
+# def test_add_funds_errors_when_account_does_not_exist(bank: Bank):
+#     bank.create_account('Name 5')
+
+#     with pytest.raises(ValueError):
+#        bank.add_funds('Name 5', £2)
